@@ -17,10 +17,11 @@ export function solve(xml) {
   const stack = [{ name: 'root', children: [] }]
   for (const token of tokens) {
     if (token.type === 'open') {
-      stack.push({ name: token.name, children: [] })
-    } else if (token.type === 'close') {
-      const node = stack.pop()
+      const node = { name: token.name, children: [] }
       stack[stack.length - 1].children.push(node)
+      stack.push(node)
+    } else if (token.type === 'close') {
+      stack.pop()
     } else {
       stack[stack.length - 1].children.push({ name: token.name })
     }
